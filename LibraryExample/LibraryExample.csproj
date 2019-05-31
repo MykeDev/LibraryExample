@@ -89,36 +89,12 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\LoansController.cs" />
-    <Compile Include="DB\Autor.cs">
-      <DependentUpon>LibraryDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\Book.cs">
-      <DependentUpon>LibraryDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\Client.cs">
-      <DependentUpon>LibraryDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\LibraryDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LibraryDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\LibraryDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LibraryDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\LibraryDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LibraryDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DB\Loan.cs">
-      <DependentUpon>LibraryDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\Reservation.cs">
-      <DependentUpon>LibraryDB.tt</DependentUpon>
-    </Compile>
+    <Compile Include="DB\Autor.cs" />
+    <Compile Include="DB\Book.cs" />
+    <Compile Include="DB\Client.cs" />
+    <Compile Include="DB\LibraryExampleEntities.cs" />
+    <Compile Include="DB\Loan.cs" />
+    <Compile Include="DB\Reservation.cs" />
     <Compile Include="DTOs\AutorDTO.cs" />
     <Compile Include="DTOs\BookDTO.cs" />
     <Compile Include="DTOs\ClientDTO.cs" />
@@ -131,30 +107,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="DB\LibraryDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LibraryDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DB\LibraryDB.edmx.diagram">
-      <DependentUpon>LibraryDB.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="DB\LibraryDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LibraryDB.edmx</DependentUpon>
-      <LastGenOutput>LibraryDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DB\LibraryDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LibraryDB.edmx</DependentUpon>
-      <LastGenOutput>LibraryDB.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
