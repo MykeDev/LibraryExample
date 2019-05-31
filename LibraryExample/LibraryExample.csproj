@@ -87,6 +87,8 @@
     <Compile Include="AutomaperInitializer.cs" />
     <Compile Include="Controllers\AutorsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\LoansController.cs" />
     <Compile Include="DB\Autor.cs">
       <DependentUpon>LibraryDB.tt</DependentUpon>
     </Compile>
@@ -119,6 +121,7 @@
     </Compile>
     <Compile Include="DTOs\AutorDTO.cs" />
     <Compile Include="DTOs\BookDTO.cs" />
+    <Compile Include="DTOs\ClientDTO.cs" />
     <Compile Include="DTOs\LoanDTO.cs" />
     <Compile Include="DTOs\ReservationDTO.cs" />
     <Compile Include="MainService.cs" />

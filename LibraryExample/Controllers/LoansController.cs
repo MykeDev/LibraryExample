@@ -11,54 +11,53 @@ using AutoMapper;
 
 namespace LibraryExample.Controllers
 {
-    public class BooksController : ApiController
+    public class LoansController : ApiController
     {
         // GET api/values 
-        public IEnumerable<BookDTO> Get()
+        public IEnumerable<LoanDTO> Get()
         {
-            List<BookDTO> output = new List<BookDTO>();
+            List<LoanDTO> output = new List<LoanDTO>();
             using (var db = new LibraryExampleEntities())
             {
-                var books = db.Books.Where(x => true).ToList();
-                output = Mapper.Map<List<Book>, List<BookDTO>>(books);
+                var clients = db.Loans.Where(x => true).ToList();
+                output = Mapper.Map<List<Loan>, List<LoanDTO>>(clients);
             }
             return output;
         }
 
         // GET api/values/5 
-        public BookDTO Get(int id)
+        public LoanDTO Get(int id)
         {
-            BookDTO output;
+            LoanDTO output;
             using (var db = new LibraryExampleEntities())
             {
-                var book = db.Books.FirstOrDefault(x => x.Id == id);
-                output = Mapper.Map<BookDTO>(book);
+                var client = db.Loans.FirstOrDefault(x => x.Id == id);
+                output = Mapper.Map<LoanDTO>(client);
             }
             return output;
         }
 
         // POST api/values 
-        public void Post([FromBody]BookDTO value)
+        public IHttpActionResult CreateNew([FromBody]LoanDTO value)
         {
-            //foreach(var book in value.Books) { book.Autor = value; }
-            var insert = Mapper.Map<Book>(value);
+            //foreach(var book in value.Loans) { book.Autor = value; }
+            value.StartDate = DateTime.UtcNow;
+            var insert = Mapper.Map<Loan>(value);
             using (var db = new LibraryExampleEntities())
             {
-                db.Books.Add(insert);
+                db.Loans.Add(insert);
                 db.SaveChanges();
             }
+            return Ok();
         }
 
         // PUT api/values/5 
-        public void Put(int id, [FromBody]BookDTO value)
+        public void CloseLoan(int id)
         {
-            var insert = Mapper.Map<Book>(value);
             using (var db = new LibraryExampleEntities())
             {
-                var toChange = db.Books.FirstOrDefault(x => x.Id == id);
-                toChange.Title = value.Title;
-                toChange.Year = value.Year;
-                toChange.Autors_Id = value.Autors_Id;
+                var toChange = db.Loans.FirstOrDefault(x => x.Id == id);
+                toChange.EndDate = DateTime.UtcNow;
                 db.SaveChanges();
             }
         }
@@ -68,7 +67,7 @@ namespace LibraryExample.Controllers
         {
             using (var db = new LibraryExampleEntities())
             {
-                var toChange = db.Books.Remove(db.Books.FirstOrDefault(x => x.Id == id));
+                var toChange = db.Loans.Remove(db.Loans.FirstOrDefault(x => x.Id == id));
                 db.SaveChanges();
             }
         }

@@ -17,6 +17,9 @@ namespace LibraryExample
             {
                 cfg.CreateMap<Autor, AutorDTO>();
                 cfg.CreateMap<Book, BookDTO>().ForMember(dest => dest.Autor, opt => opt.Condition(src => !(src.Autor is null)));
+                cfg.CreateMap<Client, ClientDTO>();
+                cfg.CreateMap<Loan, LoanDTO>();
+                cfg.CreateMap<Reservation, ReservationDTO>();
                 });
         }
     }
