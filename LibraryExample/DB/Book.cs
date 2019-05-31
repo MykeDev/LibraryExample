@@ -26,6 +26,8 @@ namespace LibraryExample.DB
         [Column("Autors.Id")]
         public int Autors_Id { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public virtual Autor Autor { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

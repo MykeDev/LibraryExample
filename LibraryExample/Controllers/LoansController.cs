@@ -48,11 +48,12 @@ namespace LibraryExample.Controllers
                 db.Loans.Add(insert);
                 db.SaveChanges();
             }
-            return Ok();
+            return Ok(insert.Id);
         }
 
         // PUT api/values/5 
-        public void CloseLoan(int id)
+        [HttpGet]
+        public IHttpActionResult CloseLoan([FromUri]int id)
         {
             using (var db = new LibraryExampleEntities())
             {
@@ -60,16 +61,22 @@ namespace LibraryExample.Controllers
                 toChange.EndDate = DateTime.UtcNow;
                 db.SaveChanges();
             }
+            return Ok();
         }
 
         // DELETE api/values/5 
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             using (var db = new LibraryExampleEntities())
             {
-                var toChange = db.Loans.Remove(db.Loans.FirstOrDefault(x => x.Id == id));
+                var toDelete = db.Loans.FirstOrDefault(x => x.Id == id);
+                if (toDelete is null)
+                    return BadRequest("Object doesn't exist");
+
+                db.Loans.Remove(toDelete);
                 db.SaveChanges();
             }
+            return Ok();
         }
     }
 }

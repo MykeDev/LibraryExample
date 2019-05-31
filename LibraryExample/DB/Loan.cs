@@ -26,6 +26,8 @@ namespace LibraryExample.DB
         [Column("Clients.Id")]
         public int Clients_Id { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public virtual Book Book { get; set; }
 
         public virtual Client Client { get; set; }

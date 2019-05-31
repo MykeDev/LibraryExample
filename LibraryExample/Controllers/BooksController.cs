@@ -38,7 +38,7 @@ namespace LibraryExample.Controllers
         }
 
         // POST api/values 
-        public void Post([FromBody]BookDTO value)
+        public IHttpActionResult Post([FromBody]BookDTO value)
         {
             //foreach(var book in value.Books) { book.Autor = value; }
             var insert = Mapper.Map<Book>(value);
@@ -47,6 +47,7 @@ namespace LibraryExample.Controllers
                 db.Books.Add(insert);
                 db.SaveChanges();
             }
+            return Ok(insert.Id);
         }
 
         // PUT api/values/5 

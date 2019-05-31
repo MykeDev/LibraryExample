@@ -13,6 +13,7 @@ namespace LibraryExample.DTOs
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime? AccountCreationDate { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         public ICollection<LoanDTO> Loans { get; set; }
         public ICollection<ReservationDTO> Reservations { get; set; }

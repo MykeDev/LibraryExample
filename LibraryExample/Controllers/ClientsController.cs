@@ -38,7 +38,7 @@ namespace LibraryExample.Controllers
         }
 
         // POST api/values 
-        public void Post([FromBody]ClientDTO value)
+        public IHttpActionResult Post([FromBody]ClientDTO value)
         {
             value.AccountCreationDate = DateTime.UtcNow;
 
@@ -49,6 +49,8 @@ namespace LibraryExample.Controllers
                 db.Clients.Add(insert);
                 db.SaveChanges();
             }
+
+            return Ok(insert.Id);
         }
 
         // PUT api/values/5 

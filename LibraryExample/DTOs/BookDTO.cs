@@ -8,6 +8,7 @@ namespace LibraryExample.DTOs
         public string Title { get; set; }
         public int? Year { get; set; }
         public int Autors_Id { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         public AutorDTO Autor { get; set; }
 

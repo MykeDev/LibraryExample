@@ -18,7 +18,8 @@ namespace LibraryExample
             HttpConfiguration config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
                 name: "CustomActionApi",
-                routeTemplate: "api/{controller}/cus_{action}"
+                routeTemplate: "api/{controller}/cus_{action}/{id}",
+                defaults: new { id = RouteParameter.Optional }
             );
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
