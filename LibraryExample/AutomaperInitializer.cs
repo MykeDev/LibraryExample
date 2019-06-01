@@ -15,11 +15,11 @@ namespace LibraryExample
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Autor, AutorDTO>();
-                cfg.CreateMap<Book, BookDTO>().ForMember(dest => dest.Autor, opt => opt.Condition(src => !(src.Autor is null)));
-                cfg.CreateMap<Client, ClientDTO>();
-                cfg.CreateMap<Loan, LoanDTO>();
-                cfg.CreateMap<Reservation, ReservationDTO>();
+                cfg.CreateMap<Autor, AutorDTO>().MaxDepth(1);
+                cfg.CreateMap<Book, BookDTO>().MaxDepth(1);
+                cfg.CreateMap<Client, ClientDTO>().MaxDepth(1);
+                cfg.CreateMap<Loan, LoanDTO>().MaxDepth(1);
+                cfg.CreateMap<Reservation, ReservationDTO>().MaxDepth(1);
                 });
         }
     }
