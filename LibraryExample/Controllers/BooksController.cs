@@ -8,6 +8,8 @@ using System.Data.Entity;
 using LibraryExample.DB;
 using LibraryExample.DTOs;
 using AutoMapper;
+using System.Net;
+using System.Net.Http;
 
 namespace LibraryExample.Controllers
 {
@@ -26,52 +28,63 @@ namespace LibraryExample.Controllers
         }
 
         // GET api/values/5 
-        public BookDTO Get(int id)
+        public IHttpActionResult Get(int id)
         {
             BookDTO output;
             using (var db = new LibraryExampleEntities())
             {
                 var book = db.Books.FirstOrDefault(x => x.Id == id);
+                if (book is null)
+                    return NotFound();
                 output = Mapper.Map<BookDTO>(book);
             }
-            return output;
+            return Ok(output);
         }
 
         // POST api/values 
         public IHttpActionResult Post([FromBody]BookDTO value)
         {
-            //foreach(var book in value.Books) { book.Autor = value; }
             var insert = Mapper.Map<Book>(value);
             using (var db = new LibraryExampleEntities())
             {
                 db.Books.Add(insert);
                 db.SaveChanges();
             }
-            return Ok(insert.Id);
+            return Created(new Uri(Request.RequestUri.AbsoluteUri), insert.Id);
         }
 
         // PUT api/values/5 
-        public void Put(int id, [FromBody]BookDTO value)
+        public IHttpActionResult Put(int id, [FromBody]BookDTO value)
         {
             var insert = Mapper.Map<Book>(value);
             using (var db = new LibraryExampleEntities())
             {
                 var toChange = db.Books.FirstOrDefault(x => x.Id == id);
+
+                if (toChange is null)
+                    return NotFound();
+
                 toChange.Title = value.Title;
                 toChange.Year = value.Year;
                 toChange.Autors_Id = value.Autors_Id;
                 db.SaveChanges();
             }
+            return Ok(insert);
         }
 
         // DELETE api/values/5 
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             using (var db = new LibraryExampleEntities())
             {
-                var toChange = db.Books.Remove(db.Books.FirstOrDefault(x => x.Id == id));
+                var toDelete = db.Books.FirstOrDefault(x => x.Id == id);
+                if (toDelete is null)
+                    return NotFound();
+
+                var toChange = db.Books.Remove(toDelete);
                 db.SaveChanges();
             }
+            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
         }
     }
 }

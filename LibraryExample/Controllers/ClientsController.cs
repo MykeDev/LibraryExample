@@ -8,6 +8,8 @@ using System.Data.Entity;
 using LibraryExample.DB;
 using LibraryExample.DTOs;
 using AutoMapper;
+using System.Net;
+using System.Net.Http;
 
 namespace LibraryExample.Controllers
 {
@@ -26,15 +28,17 @@ namespace LibraryExample.Controllers
         }
 
         // GET api/values/5 
-        public ClientDTO Get(int id)
+        public IHttpActionResult Get(int id)
         {
             ClientDTO output;
             using (var db = new LibraryExampleEntities())
             {
                 var client = db.Clients.FirstOrDefault(x => x.Id == id);
+                if (client is null)
+                    return NotFound();
                 output = Mapper.Map<ClientDTO>(client);
             }
-            return output;
+            return Ok(output);
         }
 
         // POST api/values 
@@ -42,7 +46,6 @@ namespace LibraryExample.Controllers
         {
             value.AccountCreationDate = DateTime.UtcNow;
 
-            //foreach(var book in value.Clients) { book.Autor = value; }
             var insert = Mapper.Map<Client>(value);
             using (var db = new LibraryExampleEntities())
             {
@@ -50,31 +53,41 @@ namespace LibraryExample.Controllers
                 db.SaveChanges();
             }
 
-            return Ok(insert.Id);
+            return Created(new Uri(Request.RequestUri.AbsoluteUri), insert.Id);
         }
 
         // PUT api/values/5 
-        public void Put(int id, [FromBody]ClientDTO value)
+        public IHttpActionResult Put(int id, [FromBody]ClientDTO value)
         {
             var insert = Mapper.Map<Client>(value);
             using (var db = new LibraryExampleEntities())
             {
                 var toChange = db.Clients.FirstOrDefault(x => x.Id == id);
+
+                if (toChange is null)
+                    return NotFound();
+
                 toChange.Name = value.Name;
                 toChange.Surname = value.Surname;
                 toChange.PhoneNumber = value.PhoneNumber;
                 db.SaveChanges();
             }
+            return Ok(insert);
         }
 
         // DELETE api/values/5 
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             using (var db = new LibraryExampleEntities())
             {
-                var toChange = db.Clients.Remove(db.Clients.FirstOrDefault(x => x.Id == id));
+                var toDelete = db.Clients.FirstOrDefault(x => x.Id == id);
+                if (toDelete is null)
+                    return NotFound();
+
+                var toChange = db.Clients.Remove(toDelete);
                 db.SaveChanges();
             }
+            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
         }
     }
 }
